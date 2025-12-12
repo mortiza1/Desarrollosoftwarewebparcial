@@ -11,11 +11,46 @@
 package com.desarrollosoftwareweb.empleo.app.infrastructure.controller;
 
 import com.desarrollosoftwareweb.empleo.app.domain.service.UsuarioService;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+    
+
+@RestController
+@RequestMapping("/usuarios")
 
 public class UsuarioController {
         private final UsuarioService usuarioService;
 
-    public UsuarioController() {
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = new UsuarioService();
+    }
+    @GetMapping
+    public List<String> getUsuarios() {
+        return usuarioService.getUsuarios();
+    }
+
+    @PostMapping
+    public String crearUsuario(@RequestBody String nombre) {
+        return usuarioService.crearUsuario(nombre);
+    }
+
+    @PutMapping("/{id}")
+    public String actualizarUsuario(@PathVariable int id, @RequestBody String nombre) {
+        return usuarioService.actualizarUsuario(id, nombre);
+    }
+
+    @DeleteMapping("/{id}")
+    public String eliminarUsuario(@PathVariable int id) {
+        return usuarioService.eliminarUsuario(id);
     }
 }
